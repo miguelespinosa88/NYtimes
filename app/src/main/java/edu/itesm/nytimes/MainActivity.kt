@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         manager = LinearLayoutManager(this)
         getAllData()
+        Toast.makeText(this,"onCreate",Toast.LENGTH_SHORT).show()
     }
 
     private fun getRetrofit(): Retrofit {
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity() {
             .build()
 
     }
+
     fun getAllData(){
 
         val callToService = getRetrofit().create(APIService::class.java)
@@ -46,12 +48,8 @@ class MainActivity : AppCompatActivity() {
                     Log.i("Books", results.results?.books.toString())
 
                     recyclerView = findViewById<RecyclerView>(R.id.recycler_view).apply {
-
-                        /*
-                        * Completa el código y crea el adapter.
-                        * */
-
-
+                        layoutManager = manager
+                        adapter = BooksAdapter(results.results?.books)
                     }
 
                 } else {
@@ -59,5 +57,30 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Toast.makeText(this,"onstart",Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Toast.makeText(this,"onResume",Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Toast.makeText(this,"onPause",Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Toast.makeText(this,"onStop",Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Toast.makeText(this,"onDestroy",Toast.LENGTH_SHORT).show()
     }
 }
